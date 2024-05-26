@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.ObjectModel;
 using System.Windows;
 using Supermarket.ViewModels;
 

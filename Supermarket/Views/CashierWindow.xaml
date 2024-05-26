@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Supermarket.Views"
         mc:Ignorable="d"
-        Title="CashierWindow" Height="450" Width="800">
+        Title="CashierWindow"
+        Height="200"
+        Width="200">
     <Grid>
-        
+        <Button Content="Logout"
+                HorizontalAlignment="Center"
+                Margin="0,126,0,0"
+                VerticalAlignment="Top"
+                Click="Button_Click" />
+        <Button Content="Search a Produce"
+                HorizontalAlignment="Center"
+                Margin="0,77,0,0"
+                VerticalAlignment="Top"
+                Click="Button_Click_2" />
+        <Button Content="Create a Receipt"
+                HorizontalAlignment="Center"
+                Margin="0,35,0,0"
+                VerticalAlignment="Top"
+                Click="Button_Click_1" />
+
     </Grid>
 </Window>

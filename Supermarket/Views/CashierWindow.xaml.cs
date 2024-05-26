@@ -23,5 +23,24 @@ namespace Supermarket.Views
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new();
+            loginWindow.Show();
+            Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            SearchWindow searchWindow = new(false);
+            searchWindow.Show();
+            Close();
+        }
     }
 }
