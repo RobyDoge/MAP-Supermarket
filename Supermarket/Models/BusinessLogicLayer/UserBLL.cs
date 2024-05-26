@@ -6,14 +6,15 @@ namespace Supermarket.Models.BusinessLogicLayer;
 public class UserBLL
 {
     private UserDAL UserDal { get; set; } = new();
-
-    public ObservableCollection<string> CheckLoginInfo(string username, string password)
+    public ObservableCollection<string> Type { get; set; } = new();
+    public void CheckLoginInfo(ObservableCollection<string> loginInfo)
     {
-        return UserDal.CheckLoginInfo(username, password);
+        Type = UserDal.CheckLoginInfo(loginInfo[0], loginInfo[1]);
     }
 
-    public void CreateUser(string username, string password, bool type)
+    public void CreateUser(ObservableCollection<string> loginInfo)
     {
-        UserDal.CreateUser(username, password,type);
+        var type = loginInfo[2] == "true" ? true : false;
+        UserDal.CreateUser(loginInfo[0], loginInfo[1], type);
     }
 }

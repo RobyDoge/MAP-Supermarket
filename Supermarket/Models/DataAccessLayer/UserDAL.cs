@@ -21,15 +21,17 @@ public class UserDAL
         {
             Value = password
         };
-        SqlParameter typeOrError = new("@TypeOrError", SqlDbType.VarChar)
+        SqlParameter type = new("@Type", SqlDbType.VarChar,10)
         {
             Direction = ParameterDirection.Output
         };
         command.Parameters.Add(usernameParam);
         command.Parameters.Add(passwordParam);
+        command.Parameters.Add(type);
         connection.Open();
         command.ExecuteNonQuery();
-        return [typeOrError.Value as string];
+        ObservableCollection<string> typeList = [type.Value as string];
+        return typeList;
     }
 
     public void CreateUser(string username, string password, bool isAdmin)
