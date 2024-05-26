@@ -8,9 +8,27 @@ namespace Supermarket.Models.DataAccessLayer;
 public class ProductDAL
 {
 
-    public ObservableCollection<string> SearchProductsByExpirationDate(string searchText)
+    public ObservableCollection<string> SearchProductsByExpirationDate(string expirationDate)
     {
-        throw new NotImplementedException();
+        using SqlConnection connection = DALHelper.Connection;
+        SqlCommand command = new("[GetProductsByExpirationDate]", connection)
+        {
+            CommandType = CommandType.StoredProcedure
+        };
+        if (expirationDate.Length != 10) return [];
+        SqlParameter searchTextParam = new("@inputDate", SqlDbType.NChar,10)
+        {
+            Value = expirationDate
+        };
+        command.Parameters.Add(searchTextParam);
+        connection.Open();
+        SqlDataReader reader = command.ExecuteReader();
+        ObservableCollection<string> foundProducts = new();
+        while (reader.Read())
+        {
+            foundProducts.Add(reader["Name"].ToString());
+        }
+        return foundProducts;
     }
 
     public ObservableCollection<string> SearchProductsByName(string searchText)
@@ -35,19 +53,71 @@ public class ProductDAL
         return foundProducts;
     }
 
-    public ObservableCollection<string> SearchProductsByBarcode(string searchInfoItem2)
+    public ObservableCollection<string> SearchProductsByBarcode(string barcode)
     {
-        throw new NotImplementedException();
+        using SqlConnection connection = DALHelper.Connection;
+        SqlCommand command = new("[GetProductsByBarcode]", connection)
+        {
+            CommandType = CommandType.StoredProcedure
+        };
+        if(barcode.Length > 10) return [];
+        SqlParameter searchTextParam = new("@barcode", SqlDbType.NChar,6)
+        {
+            Value = barcode
+        };
+        command.Parameters.Add(searchTextParam);
+        connection.Open();
+        SqlDataReader reader = command.ExecuteReader();
+        ObservableCollection<string> foundProducts = new();
+        while (reader.Read())
+        {
+            foundProducts.Add(reader["Name"].ToString());
+        }
+        return foundProducts;
     }
 
-    public ObservableCollection<string> SearchProductsByProducer(string searchInfoItem2)
+    public ObservableCollection<string> SearchProductsByProducer(string producerName)
     {
-        throw new NotImplementedException();
+        using SqlConnection connection = DALHelper.Connection;
+        SqlCommand command = new("[GetProductsByProducerName]", connection)
+        {
+            CommandType = CommandType.StoredProcedure
+        };
+        SqlParameter searchTextParam = new("@producerName", SqlDbType.VarChar)
+        {
+            Value = producerName
+        };
+        command.Parameters.Add(searchTextParam);
+        connection.Open();
+        SqlDataReader reader = command.ExecuteReader();
+        ObservableCollection<string> foundProducts = new();
+        while (reader.Read())
+        {
+            foundProducts.Add(reader["ProductName"].ToString());
+        }
+        return foundProducts;
     }
 
-    public ObservableCollection<string> SearchProductsByCategory(string searchInfoItem2)
+    public ObservableCollection<string> SearchProductsByCategory(string category)
     {
-        throw new NotImplementedException();
+        using SqlConnection connection = DALHelper.Connection;
+        SqlCommand command = new("[GetProductsByCategory]", connection)
+        {
+            CommandType = CommandType.StoredProcedure
+        };
+        SqlParameter searchTextParam = new("@category", SqlDbType.VarChar)
+        {
+            Value = category
+        };
+        command.Parameters.Add(searchTextParam);
+        connection.Open();
+        SqlDataReader reader = command.ExecuteReader();
+        ObservableCollection<string> foundProducts = new();
+        while (reader.Read())
+        {
+            foundProducts.Add(reader["Name"].ToString());
+        }
+        return foundProducts;
     }
 
     public ObservableCollection<string> GetProductInfo(string productName)
