@@ -11,15 +11,6 @@ namespace Supermarket.Models.BusinessLogicLayer
         private ProductDAL ProductDal { get; set; } = new();
         public ObservableCollection<string> FoundProducts = [];
         public ObservableCollection<string> FoundProductInfo = [];
-        public string? CashierName { get; set; }
-        public ProductBLL()
-        {
-
-        }
-        public ProductBLL(string cashierName)
-        {
-            CashierName = cashierName;
-        }
 
         public void SearchProducts(Tuple<string, string> searchInfo)
         {
@@ -54,25 +45,8 @@ namespace Supermarket.Models.BusinessLogicLayer
             FoundProducts = ProductDal.SearchProductsByName(SearchedText);
         }
 
-        public void CheckStock(Tuple<string, int> obj)
-        {
-            EnoughStock = ProductDal.CheckStock(obj.Item1, obj.Item2);
-        }
 
-        public void CreateReceipt(Dictionary<string, int> productList)
-        {
-            if (CashierName == null) throw new ArgumentNullException("CashierName is null");
-
-            Dictionary<string, Tuple<int,decimal>> productPrices = new();
-            foreach (var product in productList)
-            {
-                productPrices.Add(product.Key, new Tuple<int, decimal>(product.Value,ProductDal.GetProductPrice(product.Key)));
-            }
-            ShoppingListJson shoppingList = new(productPrices);
-            ProductDal.CreateReceipt(CashierName, shoppingList.JsonList,shoppingList.TotalPrice);
-
-            
-        }
+        
 
 
 
@@ -91,17 +65,7 @@ namespace Supermarket.Models.BusinessLogicLayer
             }
         }
 
-        private bool _enoughStock;
-
-        public bool EnoughStock
-        {
-            get => _enoughStock;
-            set
-            {
-                _enoughStock = value;
-                NotifyPropertyChanged("SearchedText");
-            }
-        }
+        
 
         #endregion
 

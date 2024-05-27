@@ -153,35 +153,7 @@ public class ProductDAL
         
     }
 
-    public bool CheckStock(string productName, int quantity)
-    {
-        using SqlConnection connection = DALHelper.Connection;
-        SqlCommand command = new("[CheckStockAvailability]", connection)
-        {
-            CommandType = CommandType.StoredProcedure
-        };
-        SqlParameter productNameParam = new("@productName", SqlDbType.VarChar)
-        {
-            Value = productName
-        };
-        SqlParameter quantityParam = new("@requiredQuantity", SqlDbType.Int)
-        {
-            Value = quantity
-        };
-        SqlParameter isAvailable = new("@isAvailable", SqlDbType.Bit)
-        {
-            Direction = ParameterDirection.Output
-        };
-        command.Parameters.Add(productNameParam);
-        command.Parameters.Add(quantityParam);
-        command.Parameters.Add(isAvailable);
-        connection.Open();
-        command.ExecuteNonQuery();
-        var result = isAvailable.Value;
-        return (bool)isAvailable.Value;
-    }
-
-    internal decimal GetProductPrice(string key)
+    public decimal GetProductPrice(string key)
     {
         using SqlConnection connection = DALHelper.Connection;
         SqlCommand command = new("[GetProductPrice]", connection)
@@ -199,32 +171,5 @@ public class ProductDAL
         return (decimal)reader["sellingPrice"];
     }
 
-    public void CreateReceipt(string cashierName, string shoppingListJsonList, decimal totalPrice)
-    {
-        SqlConnection connection = DALHelper.Connection;
-        SqlCommand command = new("[AddReceipt]", connection)
-        {
-            CommandType = CommandType.StoredProcedure
-        };
-        SqlParameter cashierNameParam = new("@cashierName", SqlDbType.VarChar)
-        {
-            Value = cashierName
-        };
-        SqlParameter shoppingListParam = new("@productList", SqlDbType.VarChar,-1)
-        {
-            Value = shoppingListJsonList
-        };
-        SqlParameter totalPriceParam = new("@totalPrice", SqlDbType.Decimal)
-        {
-            Value = totalPrice,
-            Precision = 18,
-            Scale = 2
-        };
-        command.Parameters.Add(cashierNameParam);
-        command.Parameters.Add(shoppingListParam);
-        command.Parameters.Add(totalPriceParam);
-        connection.Open();
-        command.ExecuteNonQuery();
-
-    }
+    
 }

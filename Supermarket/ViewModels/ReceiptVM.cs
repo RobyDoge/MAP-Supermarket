@@ -9,18 +9,19 @@ namespace Supermarket.ViewModels;
 public class ReceiptVM:BasePropertyChanged
 {
     public Dictionary<string, int> ProductList { get; set; } = [];
-    private ProductBLL ProductBll { get; set; }
+    private ProductBLL ProductBll { get; set; } = new();
+    private ReceiptBLL ReceiptBll { get; set; } = new("");
+    private StockBLL StockBll { get; set; } = new();
     public ObservableCollection<string> FoundItems => ProductBll.FoundProducts;
     private string CashierName { get; set; }
     public ReceiptVM()
     {
-        ProductBll = new();
     }
 
     public ReceiptVM(string cashierName)
     {
         CashierName = cashierName;
-        ProductBll = new(cashierName);
+        ReceiptBll = new(cashierName);
     }
 
     public void AddProductToList(string? productName, int quantity)
@@ -52,7 +53,7 @@ public class ReceiptVM:BasePropertyChanged
         {
             if (_checkStock == null)
             {
-                _checkStock = new RelayCommand<Tuple<string,int>>(ProductBll.CheckStock);
+                _checkStock = new RelayCommand<Tuple<string,int>>(StockBll.CheckStock);
             }
             return _checkStock;
         }
@@ -66,7 +67,7 @@ public class ReceiptVM:BasePropertyChanged
         {
             if (_createReceipt == null)
             {
-                _createReceipt = new RelayCommand<Dictionary<string,int>>(ProductBll.CreateReceipt);
+                _createReceipt = new RelayCommand<Dictionary<string,int>>(ReceiptBll.CreateReceipt);
             }
             return _createReceipt;
         }
@@ -88,7 +89,7 @@ public class ReceiptVM:BasePropertyChanged
         }
     }
 
-    public bool EnoughStock => ProductBll.EnoughStock;
+    public bool EnoughStock => StockBll.EnoughStock;
 
     #endregion
 

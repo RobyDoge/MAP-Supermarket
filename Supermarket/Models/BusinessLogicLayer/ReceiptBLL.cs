@@ -1,6 +1,27 @@
-﻿namespace Supermarket.Models.BusinessLogicLayer;
+﻿using Supermarket.Models.DataAccessLayer;
+using Supermarket.Services;
 
-public class ReceiptBLL
+namespace Supermarket.Models.BusinessLogicLayer;
+
+public class ReceiptBLL(string cashierName)
 {
-    
+    private string CashierName { get; set; } = cashierName;
+    private ReceiptDAL ReceiptDal { get; set; } = new();
+    private ProductDAL ProductDal { get; set; } = new();
+
+    public void CreateReceipt(Dictionary<string, int> productList)
+    {
+        if (CashierName == null) throw new ArgumentNullException("CashierName is null");
+
+        Dictionary<string, Tuple<int, decimal>> productPrices = new();
+        foreach (var product in productList)
+        {
+            productPrices.Add(product.Key, new Tuple<int, decimal>(product.Value, ProductDal.GetProductPrice(product.Key)));
+
+        }
+        ShoppingListJson shoppingList = new(productPrices);
+        ReceiptDal.CreateReceipt(CashierName, shoppingList.JsonList, shoppingList.TotalPrice);
+
+
+    }
 }
