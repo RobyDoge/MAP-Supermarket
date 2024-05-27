@@ -53,8 +53,4 @@ public class SearchVM: BasePropertyChanged
     #endregion
 
 
-    #region Fields
-
-
-    #endregion
 }
