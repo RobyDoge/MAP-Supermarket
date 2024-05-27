@@ -20,16 +20,19 @@ namespace Supermarket.Views
     /// </summary>
     public partial class ReceiptWindow : Window
     {
-        private ReceiptVM ReceiptVm = new();
-        public ReceiptWindow()
+        private ReceiptVM ReceiptVm;
+        private string CashierName { get; set; }
+        public ReceiptWindow(string cashierName)
         {
+            ReceiptVm = new(cashierName);
+            CashierName = cashierName;
             InitializeComponent();
             DataContext = ReceiptVm;
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
-            CashierWindow cashierWindow = new();
+            CashierWindow cashierWindow = new(CashierName);
             cashierWindow.Show();
             Close();
             
@@ -66,6 +69,8 @@ namespace Supermarket.Views
                 MessageBox.Show("There is not enough stock for this item.");
                 return;
             }
+
+            ReceiptVm.AddProductToList(lbFoundItems.SelectedItems[0].ToString(), quantity);
         }
     }
 }

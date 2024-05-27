@@ -19,9 +19,11 @@ namespace Supermarket.Views
     /// </summary>
     public partial class CashierWindow : Window
     {
-        public CashierWindow()
+        private string CashierName { get; set; }
+        public CashierWindow(string cashierName)
         {
             InitializeComponent();
+            CashierName = cashierName;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -33,14 +35,14 @@ namespace Supermarket.Views
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            ReceiptWindow receiptWindow = new ();
+            ReceiptWindow receiptWindow = new (CashierName);
                 receiptWindow.Show();
                 Close();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            SearchWindow searchWindow = new(false);
+            SearchWindow searchWindow = new(false,CashierName);
             searchWindow.Show();
             Close();
         }

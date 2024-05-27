@@ -8,9 +8,25 @@ namespace Supermarket.ViewModels;
 
 public class ReceiptVM:BasePropertyChanged
 {
-    private ObservableCollection<Tuple<string,int>> ProductQuantity { get; set; }
-    private ProductBLL ProductBll { get; set; } = new();
+    public Dictionary<string, int> ProductList { get; set; } = [];
+    private ProductBLL ProductBll { get; set; }
     public ObservableCollection<string> FoundItems => ProductBll.FoundProducts;
+    private string CashierName { get; set; }
+    public ReceiptVM()
+    {
+        ProductBll = new();
+    }
+
+    public ReceiptVM(string cashierName)
+    {
+        CashierName = cashierName;
+        ProductBll = new(cashierName);
+    }
+
+    public void AddProductToList(string? productName, int quantity)
+    {
+        ProductList.Add(productName,quantity);
+    }
 
     #region Commands
 
@@ -42,6 +58,20 @@ public class ReceiptVM:BasePropertyChanged
         }
     }
 
+    private ICommand _createReceipt;
+
+    public ICommand CreateReceipt
+    {
+        get
+        {
+            if (_createReceipt == null)
+            {
+                _createReceipt = new RelayCommand<Dictionary<string,int>>(ProductBll.CreateReceipt);
+            }
+            return _createReceipt;
+        }
+
+    }
 
     #endregion
 
@@ -61,4 +91,6 @@ public class ReceiptVM:BasePropertyChanged
     public bool EnoughStock => ProductBll.EnoughStock;
 
     #endregion
+
+    
 }

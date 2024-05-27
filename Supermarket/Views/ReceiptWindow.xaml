@@ -22,9 +22,9 @@
                 Height="47"
                 Width="160"
                 FontSize="20" />
-        <TextBox HorizontalAlignment="Left"
+        <TextBox HorizontalAlignment="Center"
                  Name="txtSearchBar"
-                 Margin="430,243,0,0"
+                 Margin="0,213,0,0"
                  Text="{Binding SearchedText}"
                  TextWrapping="Wrap"
                  TextChanged="txtSearchBar_OnTextChanged"
@@ -35,7 +35,18 @@
         <ListBox ItemsSource="{Binding FoundItems}"
                  Name="lbFoundItems"
                  SelectionChanged="LbFoundItems_OnSelectionChanged"
-                 Margin="591,299,403,95"
+                 Margin="497,269,497,125"
                  FontSize="15" />
+        <Button Content="Create Receipt"
+                x:Name="btnReturn_Copy"
+                HorizontalAlignment="Center"
+                Margin="0,619,0,0"
+                VerticalAlignment="Top"
+                Command="{Binding CreateReceipt}"
+                CommandParameter="{Binding ProductList}"
+                Click="btnReturn_Click"
+                Height="47"
+                Width="160"
+                FontSize="20" />
     </Grid>
 </Window>

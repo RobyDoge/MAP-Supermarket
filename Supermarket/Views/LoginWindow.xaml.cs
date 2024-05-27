@@ -28,7 +28,7 @@ namespace Supermarket.Views
                     Close();
                     break;
                 case "cashier":
-                    CashierWindow cashierWindow = new();
+                    CashierWindow cashierWindow = new(tbUsername.Text);
                     cashierWindow.Show();
                     Close();
                     break;

@@ -24,9 +24,11 @@ namespace Supermarket.Views
         SearchVM SearchVm = new();
         private bool IsAdmin { get; set; }
         ObservableCollection<string>? SearchBy { get; set; }
+        private string CashierName { get; set; }
 
-        public SearchWindow(bool isAdmin)
+        public SearchWindow(bool isAdmin,string cashierName)
         {
+            CashierName= cashierName;
             InitializeComponent();
             IsAdmin = isAdmin;
             CreateSearchBy();
@@ -56,7 +58,7 @@ namespace Supermarket.Views
             }
             else
             {
-                CashierWindow cashierWindow = new();
+                CashierWindow cashierWindow = new(CashierName);
                 cashierWindow.Show();
                 Close();
             }
