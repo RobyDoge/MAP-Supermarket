@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Supermarket.Models.BusinessLogicLayer;
 using Supermarket.Models.EntityLayer;
@@ -13,6 +14,7 @@ public class ReceiptVM:BasePropertyChanged
     private ReceiptBLL ReceiptBll { get; set; } = new("");
     private StockBLL StockBll { get; set; } = new();
     public ObservableCollection<string> FoundItems => ProductBll.FoundProducts;
+    public ObservableCollection<Receipt> Receipts => ReceiptBll.Receipts;
     private string CashierName { get; set; }
     public ReceiptVM()
     {
@@ -73,7 +75,32 @@ public class ReceiptVM:BasePropertyChanged
         }
 
     }
+    private ICommand _loadReceipts;
 
+    public ICommand LoadReceipts
+    {
+        get
+        {
+            if (_loadReceipts == null)
+            {
+                _loadReceipts = new RelayCommand<string>(ReceiptBll.LoadReceipts);
+            }
+            return _loadReceipts;
+        }
+    }
+    private ICommand _getCashierName;
+
+    public ICommand GetCashierName
+    {
+        get
+        {
+            if (_getCashierName == null)
+            {
+                _getCashierName = new RelayCommand<int>(ReceiptBll.GetCashierName);
+            }
+            return _getCashierName;
+        }
+    }
     #endregion
 
 
@@ -90,8 +117,10 @@ public class ReceiptVM:BasePropertyChanged
     }
 
     public bool EnoughStock => StockBll.EnoughStock;
+    public string ReceiptCashierName => ReceiptBll.ReceiptCashierName;
 
     #endregion
+
 
     
 }

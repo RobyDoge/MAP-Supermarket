@@ -4,26 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Supermarket.Views"
+        xmlns:ctx="clr-namespace:Supermarket.ViewModels"
         mc:Ignorable="d"
         Title="CashierWindow"
         Height="200"
         Width="200">
+    <Window.DataContext>
+        <ctx:ReceiptVM/>
+    </Window.DataContext>
     <Grid>
         <Button Content="Logout"
                 HorizontalAlignment="Center"
-                Margin="0,126,0,0"
+                Margin="0,145,0,0"
                 VerticalAlignment="Top"
                 Click="Button_Click" />
         <Button Content="Search a Produce"
                 HorizontalAlignment="Center"
-                Margin="0,77,0,0"
+                Margin="0,108,0,0"
                 VerticalAlignment="Top"
                 Click="Button_Click_2" />
         <Button Content="Create a Receipt"
                 HorizontalAlignment="Center"
-                Margin="0,35,0,0"
+                Margin="0,72,0,0"
                 VerticalAlignment="Top"
                 Click="Button_Click_1" />
+        
+        <ComboBox Name="cmbReceipt"
+                  SelectionChanged="CmbReceipt_OnSelectionChanged"
+                HorizontalAlignment="Center"
+                Margin="0,32,0,0"
+                VerticalAlignment="Top"
+                  Width="90" />
+
 
     </Grid>
 </Window>

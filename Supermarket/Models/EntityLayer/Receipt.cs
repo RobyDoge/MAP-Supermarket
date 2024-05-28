@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Supermarket.Models.EntityLayer;
 
 // wip
-public abstract class Receipt : BasePropertyChanged
+public class Receipt : BasePropertyChanged
 {
     #region Fields
 
@@ -67,7 +67,7 @@ public abstract class Receipt : BasePropertyChanged
     #endregion
 
 
-    public abstract class Product
+    public abstract class ReceiptProduct
     {
         public string Name { get; set; }
         public decimal Price { get; set; }

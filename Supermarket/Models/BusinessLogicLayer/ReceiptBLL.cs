@@ -1,4 +1,6 @@
-﻿using Supermarket.Models.DataAccessLayer;
+﻿using System.Collections.ObjectModel;
+using Supermarket.Models.DataAccessLayer;
+using Supermarket.Models.EntityLayer;
 using Supermarket.Services;
 
 namespace Supermarket.Models.BusinessLogicLayer;
@@ -9,6 +11,8 @@ public class ReceiptBLL(string cashierName)
     private ReceiptDAL ReceiptDal { get; set; } = new();
     private ProductDAL ProductDal { get; set; } = new();
     private StockDAL StockDal { get; set; } = new();
+    public ObservableCollection<Receipt> Receipts { get; set; }
+    public string ReceiptCashierName { get; set; }
 
     public void CreateReceipt(Dictionary<string, int> productList)
     {
@@ -24,7 +28,15 @@ public class ReceiptBLL(string cashierName)
         }
         ShoppingListJson shoppingList = new(productPrices);
         ReceiptDal.CreateReceipt(CashierName, shoppingList.JsonList, shoppingList.TotalPrice);
+    }
 
+    public void LoadReceipts(string notUsed)
+    {
+        Receipts = ReceiptDal.GetReceipts();
+    }
 
+    public void GetCashierName(int receiptId)
+    {
+        ReceiptCashierName = ReceiptDal.GetCashierName(receiptId);
     }
 }
